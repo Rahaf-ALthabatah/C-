@@ -2,41 +2,48 @@ using System;
 
 class Program
 {
-    static void Main()
+static void Main()
+{
+Console.Write("Enter the minimum number: ");
+int minNumber = int.Parse(Console.ReadLine());
+
+    Console.Write("Enter the maximum number: ");
+    int maxNumber = int.Parse(Console.ReadLine());
+
+    if (minNumber > maxNumber)
     {
-        try
+        Console.WriteLine("Invalid range. The minimum number must be less than or equal to the maximum number.");
+        return;
+    }
+
+    int rangeSize = maxNumber - minNumber + 1;
+    int[] aar1 = new int[rangeSize];
+    int[] aar2 = new int[rangeSize];
+
+    for (int i = 0; i < rangeSize; i++)
+    {
+        aar1[i] = minNumber + i;
+        aar2[i] = 0; 
+    }
+
+    Random rand = new Random();
+
+    for (int i = 0; i < 1000; i++)
+    {
+        int randomNumber = rand.Next(minNumber, maxNumber + 1);
+
+        for (int j = 0; j < rangeSize; j++)
         {
-            Console.Write("Enter minNumber: ");
-            int minNum = int.Parse(Console.ReadLine());
-
-            Console.Write("Enter maxNumber: ");
-            int maxNum = int.Parse(Console.ReadLine());
-
-            if (minNum >= maxNum)
+            if (randomNumber == aar1[j])
             {
-                Console.WriteLine("Error: minNumber should be less than maxNumber.");
-                return;
-            }
-
-            int range = maxNum - minNum + 1;
-            int[] frequencyArray = new int[range];
-            Random rand = new Random();
-
-            for (int i = 0; i < 1000; i++)
-            {
-                int randomNum = rand.Next(minNum, maxNum + 1);
-                frequencyArray[randomNum - minNum]++;
-            }
-
-            Console.WriteLine("Number | Frequency");
-            for (int i = 0; i < range; i++)
-            {
-                Console.WriteLine($"{minNum + i} | {frequencyArray[i]}");
+                aar2[j]++; 
+                break; 
             }
         }
-        catch (FormatException)
-        {
-            Console.WriteLine("Invalid input. Please enter valid integers.");
-        }
+    }
+
+    for (int i = 0; i < rangeSize; i++)
+    {
+        Console.WriteLine($"{aar1[i]} appeared {aar2[i]} times.");
     }
 }
